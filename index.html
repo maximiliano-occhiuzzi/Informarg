@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mapa de Riesgo a Inundaciones - Argentina</title>
+
+<link rel="stylesheet" href="/Diseño-1/estilos.css">
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+</head>
+
+<body>
+
+<div class="app-container">
+
+  <!-- NAV -->
+  <nav class="main-nav">
+    <div class="nav-content">
+
+      <div class="nav-left">
+
+        <div class="logo-container">
+          <div class="logo-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <path d="M20 5L5 12V20C5 28.5 11 35.5 20 38C29 35.5 35 28.5 35 20V12L20 5Z"
+                fill="#2E5C8A" fill-opacity="0.9"/>
+              <path d="M20 12C16 12 13 15 13 19C13 23 20 30 20 30C20 30 27 23 27 19C27 15 24 12 20 12Z"
+                fill="#FF9B5A"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="nav-title">
+          <a href="/" class="title-link">
+            <h1>Mapa de Riesgo a Inundaciones</h1>
+          </a>
+
+          <span class="subtitle-tag">
+            República Argentina
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <h2 class="secondary-title">
+      Visualización Territorial Dinámica
+    </h2>
+
+    <p class="header-description">
+      Sistema de análisis geoespacial basado en INFORM Argentina
+    </p>
+
+  </div>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <div class="content-grid">
+
+      <!-- PANEL IZQUIERDO -->
+      <aside class="left-panel">
+
+        <!-- LEYENDA -->
+        <div class="panel-card legend-panel">
+
+          <h3 class="panel-title">
+            Leyenda
+          </h3>
+
+          <div class="legend-content">
+
+            <p class="legend-description">
+              Intensidad del color según índice seleccionado
+            </p>
+
+            <!-- LEYENDA DINAMICA -->
+            <div id="leyenda" class="leyenda"></div>
+
+            <div class="legend-info">
+
+              <h4>Capa actual</h4>
+
+              <p id="currentLayerInfo"
+                 class="current-layer-info">
+
+                Riesgo general
+
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- FILTRO -->
+        <div class="panel-card info-panel">
+
+          <h3 class="panel-title">
+            Filtrar por Provincia
+          </h3>
+
+          <div class="info-content">
+
+            <select id="filtro-provincia"
+                    class="province-filter">
+
+              <option value="">
+                Todas las provincias
+              </option>
+
+            </select>
+
+            <div id="contador"
+                 class="contador-deptos">
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- INFO -->
+        <div class="panel-card info-panel">
+
+          <h3 class="panel-title">
+            Información
+          </h3>
+
+          <div class="info-content">
+
+            <div class="info-item">
+              <span class="info-label">
+                Fuente de datos:
+              </span>
+
+              <span class="info-value">
+                INFORM Argentina / IGN
+              </span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">
+                Cobertura:
+              </span>
+
+              <span class="info-value">
+                Nacional
+              </span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">
+                Tipo:
+              </span>
+
+              <span class="info-value">
+                GeoJSON departamental
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </aside>
+
+      <!-- MAPA -->
+      <section class="map-section">
+
+        <div class="map-card">
+
+          <div class="map-header">
+
+            <h3 class="map-title">
+              Mapa Interactivo
+            </h3>
+
+            <div class="map-status">
+              <span class="status-indicator active"></span>
+
+              <span class="status-text">
+                Activo
+              </span>
+            </div>
+
+          </div>
+
+          <!-- LEAFLET -->
+          <div id="map"
+               class="map-container">
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- PANEL DERECHO -->
+      <aside class="right-panel">
+
+        <!-- CAPAS -->
+        <div class="panel-card layers-panel">
+
+          <h3 class="panel-title">
+            Capas Temáticas
+          </h3>
+
+          <div class="layers-buttons">
+
+  <button
+    class="layer-button capa-btn active"
+
+    data-campo="Riesgo (Reescalado)"
+    data-color1="#FDDBC7"
+    data-color2="#67000D">
+
+    <span
+      class="layer-color-indicator"
+      style="
+        background:#E57373;
+        border:2px solid #C0392B;
+      ">
+    </span>
+
+    <span class="layer-name">
+      Índice de Riesgo
+    </span>
+
+    <span class="active-indicator">●</span>
+
+  </button>
+
+  <button
+    class="layer-button capa-btn"
+
+    data-campo="Vulnerabilidad"
+    data-color1="#DEEBF7"
+    data-color2="#08306B">
+
+    <span
+      class="layer-color-indicator"
+      style="
+        background:#5DADE2;
+        border:2px solid #3498DB;
+      ">
+    </span>
+
+    <span class="layer-name">
+      Vulnerabilidad
+    </span>
+
+  </button>
+
+  <button
+    class="layer-button capa-btn"
+
+    data-campo="Falta de Capacidad de Respuesta (Reescalado)"
+    data-color1="#E5F5E0"
+    data-color2="#00441B">
+
+    <span
+      class="layer-color-indicator"
+      style="
+        background:#7BC67E;
+        border:2px solid #4CAF50;
+      ">
+    </span>
+
+    <span class="layer-name">
+      Capacidad y Respuesta
+    </span>
+
+  </button>
+
+  <button
+    class="layer-button capa-btn"
+
+    data-campo="Peligro y Exposición (Reescalado)"
+    data-color1="#FFF3CD"
+    data-color2="#E65C00">
+
+    <span
+      class="layer-color-indicator"
+      style="
+        background:#FF9B5A;
+        border:2px solid #E67E22;
+      ">
+    </span>
+
+    <span class="layer-name">
+      Peligro y Exposición
+    </span>
+
+  </button>
+
+</div>
+
+        </div>
+
+        <!-- INSTRUCCIONES -->
+        <div class="panel-card instructions-panel">
+
+          <h3 class="panel-title">
+            Instrucciones
+          </h3>
+
+          <div class="instructions-content">
+
+            <ol class="instructions-list">
+
+              <li>
+                Seleccione una capa temática
+              </li>
+
+              <li>
+                Filtre por provincia si lo desea
+              </li>
+
+              <li>
+                Navegue por el mapa
+              </li>
+
+              <li>
+                Haga click sobre un departamento
+              </li>
+
+              <li>
+                Visualice los índices dinámicos
+              </li>
+
+            </ol>
+
+          </div>
+
+        </div>
+
+      </aside>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="main-footer">
+
+    <div class="footer-content">
+
+      <p class="footer-text">
+        Sistema de Visualización de Riesgo © 2026 |
+        Desarrollo académico-técnico | Argentina
+      </p>
+
+      <p class="footer-subtext">
+        Datos cartográficos: Instituto Geográfico Nacional (IGN)
+      </p>
+
+    </div>
+
+  </footer>
+
+</div>
+
+<!-- LOADING -->
+<div id="loading" class="loading-overlay">
+
+  <div class="spinner"></div>
+
+  <div class="loading-text">
+    Cargando mapa...
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- LEAFLET -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<!-- SCRIPTS -->
+<script type="module" src="/Diseño-1/interactividad.js"></script>
+<script type="module" src="/Diseño-1/logica.js"></script>
+
+</body>
+</html>
