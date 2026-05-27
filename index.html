@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mapa de Riesgo a Inundaciones - Argentina</title>
+<title>MAPA DE RIESGO ARGENTINA</title>
 
 <link rel="stylesheet" href="/Diseño-1/estilos.css">
 
@@ -37,7 +37,7 @@
 
         <div class="nav-title">
           <a href="/" class="title-link">
-            <h1>Mapa de Riesgo a Inundaciones</h1>
+            <h1>MAPA DE RIESGO ARGENTINA</h1>
           </a>
 
           <span class="subtitle-tag">
@@ -103,7 +103,51 @@
           </div>
 
         </div>
+<!-- BUSCADOR -->
+<div class="panel-card">
+  <h3 class="panel-title">Buscar departamento</h3>
+  <div style="position:relative;">
 
+    <div style="display:flex;gap:6px;align-items:center;">
+      <input
+        id="buscador-depto"
+        type="text"
+        placeholder="Ej: Loncopué, Saladillo..."
+        autocomplete="off"
+        class="province-filter"
+        style="flex:1;"
+      />
+      <button id="buscador-limpiar"
+        title="Limpiar búsqueda"
+        style="
+          padding:7px 10px;
+          border:1px solid #D0DBE8;
+          border-radius:5px;
+          background:white;
+          cursor:pointer;
+          font-size:13px;
+          color:#666;
+          flex-shrink:0;
+        ">✕</button>
+    </div>
+
+    <!-- SUGERENCIAS -->
+    <div id="buscador-sugerencias" style="
+      display:none;
+      position:absolute;
+      top:100%;
+      left:0; right:0;
+      background:white;
+      border:1px solid #D0DBE8;
+      border-radius:0 0 6px 6px;
+      box-shadow:0 4px 12px rgba(27,58,92,0.12);
+      z-index:9999;
+      max-height:220px;
+      overflow-y:auto;
+    "></div>
+
+  </div>
+</div>
         <!-- FILTRO -->
         <div class="panel-card info-panel">
 
@@ -219,10 +263,10 @@
 
   <button
     class="layer-button capa-btn active"
-
-    data-campo="Riesgo (Reescalado)"
-    data-color1="#FDDBC7"
-    data-color2="#67000D">
+  data-capa="riesgo"
+  data-campo="Riesgo (Reescalado)"
+  data-color1="#FDDBC7"
+  data-color2="#67000D">
 
     <span
       class="layer-color-indicator"
@@ -282,12 +326,12 @@
 
   </button>
 
-  <button
-    class="layer-button capa-btn"
-
-    data-campo="Peligro y Exposición (Reescalado)"
-    data-color1="#FFF3CD"
-    data-color2="#E65C00">
+ <button
+  class="layer-button capa-btn"
+  data-capa="peligro"
+  data-campo="Peligro y Exposición (Reescalado)"
+  data-color1="#FFF5EB"
+  data-color2="#7F2704">
 
     <span
       class="layer-color-indicator"
