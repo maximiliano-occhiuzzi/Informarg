@@ -1,6 +1,4 @@
-// ======================================================
 // SUBCAPAS DE RIESGO
-// ======================================================
 
 const SUBCAPAS_RIESGO = [
     {
@@ -33,9 +31,7 @@ const SUBCAPAS_RIESGO = [
     }
 ];
 
-// ======================================================
 // SUBCAPAS DE PELIGRO Y EXPOSICIÓN
-// ======================================================
 
 const SUBCAPAS_PELIGRO = [
     {
@@ -68,18 +64,14 @@ const SUBCAPAS_PELIGRO = [
     }
 ];
 
-// ======================================================
 // BREAKS CUANTÍLICOS
-// ======================================================
 
 const QUANTILE_BREAKS = {
     "Vulnerabilidad":                               [0, 3.22, 4.08, 5.24, 6.21, 10],
     "Falta de Capacidad de Respuesta (Reescalado)": [0, 7.73, 8.02, 8.18, 8.37, 10],
 };
 
-// ======================================================
 // ESTADO GLOBAL
-// ======================================================
 
 let geojsonData     = null;
 let geojsonLayer    = null;
@@ -93,9 +85,7 @@ let capaActual = {
     nombre: "Multiriesgo"
 };
 
-// ======================================================
 // NIVELES LEYENDA
-// ======================================================
 
 const NIVELES = [
     { label: "0 – 2  Muy bajo", min: 0,  max: 2  },
@@ -105,9 +95,7 @@ const NIVELES = [
     { label: "8 – 10 Muy alto", min: 8,  max: 10 },
 ];
 
-// ======================================================
 // MAPA BASE
-// ======================================================
 
 const map = L.map('map', {
     center: [-38.4161, -63.6167],
@@ -127,9 +115,7 @@ L.tileLayer(
     }
 ).addTo(map);
 
-// ======================================================
 // COLORES
-// ======================================================
 
 function hexToRgb(hex) {
     return [
@@ -179,9 +165,7 @@ function interpolarColor(valor, color1, color2, campo) {
     return `rgb(${Math.round(r1+(r2-r1)*t)},${Math.round(g1+(g2-g1)*t)},${Math.round(b1+(b2-b1)*t)})`;
 }
 
-// ======================================================
 // ESTILO POLÍGONOS
-// ======================================================
 
 function estiloFeature(feature) {
     const valor = feature.properties[capaActual.campo] ?? 0;
@@ -194,9 +178,7 @@ function estiloFeature(feature) {
     };
 }
 
-// ======================================================
 // MINI-MAPA EN CANVAS
-// ======================================================
 
 function extraerCoordenadas(geometry) {
     const coords = [];
@@ -345,9 +327,7 @@ function dibujarMiniMapa(feature) {
     }
 }
 
-// ======================================================
 // POPUP
-// ======================================================
 
 function fila(label, val, color) {
     const txt = val != null ? Number(val).toFixed(2) : "—";
@@ -444,9 +424,7 @@ function construirPopup(props) {
         </div>`;
 }
 
-// ======================================================
 // DESCARGAR REPORTE
-// ======================================================
 
 window.descargarReportePopup = function(button) {
     const popup = button.closest('.popup-captura');
@@ -706,9 +684,7 @@ window.descargarReportePopup = function(button) {
     link.click();
 };
 
-// ======================================================
 // INTERACCIONES
-// ======================================================
 
 // Referencia al último departamento resaltado por hover, usada como
 // respaldo para evitar que quede "pegado" el resaltado si el navegador
@@ -752,9 +728,7 @@ function onEachFeature(feature, layer) {
     });
 }
 
-// ======================================================
 // LEYENDA
-// ======================================================
 
 function actualizarLeyenda() {
     const contenedor = document.getElementById('leyenda');
@@ -781,9 +755,7 @@ function actualizarLeyenda() {
     if (info) info.textContent = capaActual.nombre;
 }
 
-// ======================================================
 // RENDERIZAR CAPA
-// ======================================================
 
 function renderizarCapa() {
     if (!geojsonData) return;
@@ -807,9 +779,7 @@ function renderizarCapa() {
     actualizarLeyenda();
 }
 
-// ======================================================
 // FUNCIÓN GENÉRICA PARA CREAR SUBMENÚS
-// ======================================================
 
 function crearSubMenuGenerico(idSubmenu, idDefecto, btnPadre, subcapas) {
     const existente = document.getElementById(idSubmenu);
@@ -924,9 +894,7 @@ function cerrarSubMenu() {
     subMenuAbierto = false;
 }
 
-// ======================================================
 // CARGA DEL GEOJSON  ← apunta al archivo enriquecido
-// ======================================================
 
 fetch('/Diseño-1/INFORM_web_enriched.geojson')
     .then(res => {
@@ -972,9 +940,7 @@ fetch('/Diseño-1/INFORM_web_enriched.geojson')
         document.getElementById('loading').style.display = 'none';
     });
 
-// ======================================================
 // BOTONES DE CAPA PRINCIPALES
-// ======================================================
 
 document.querySelectorAll('.capa-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1002,9 +968,7 @@ document.querySelectorAll('.capa-btn').forEach(btn => {
     });
 });
 
-// ======================================================
 // FILTRO PROVINCIA
-// ======================================================
 
 document.getElementById('filtro-provincia').addEventListener('change', e => {
     provinciaActual = e.target.value;
@@ -1019,9 +983,7 @@ document.getElementById('filtro-provincia').addEventListener('change', e => {
     }
 });
 
-// ======================================================
 // BUSCADOR DE DEPARTAMENTOS
-// ======================================================
 
 let resaltadoLayer = null;
 
@@ -1168,9 +1130,7 @@ function limpiarResaltado() {
     }
 }
 
-// ======================================================
 // TOAST
-// ======================================================
 
 function mostrarToast(msg) {
     const toast = document.getElementById('toast');
@@ -1179,9 +1139,7 @@ function mostrarToast(msg) {
     setTimeout(() => toast.classList.remove('visible'), 4000);
 }
 
-// ======================================================
 // PANTALLA COMPLETA DEL MAPA
-// ======================================================
 
 const ICONO_EXPANDIR = `
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
